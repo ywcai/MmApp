@@ -1,0 +1,10 @@
+{
+  "pages":[
+    "pages/index/index"
+  ],
+  "window":{
+    "navigationBarBackgroundColor": "#aaa",
+    "navigationBarTitleText": "爱米瑞流量",
+    "navigationBarTextStyle":"light"
+  }
+}

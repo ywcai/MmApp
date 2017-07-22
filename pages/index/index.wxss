@@ -1,0 +1,298 @@
+/**index.wxss**/
+.userinfo {
+  flex-direction: column;
+  align-items:flex-start;
+}
+
+.head_img
+{
+    width: 100%;
+    height:200rpx;
+}
+.my_nav{
+  margin-top: 10rpx;
+  font-family: "微软雅黑";
+  margin-left: 20rpx;
+  margin-right:20rpx;
+  height: 50rpx;
+  background: white;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  border-top: solid 1rpx darkgrey;
+  border-bottom: solid 1rpx darkgrey;
+}
+.my_nav_left
+{
+  width: 30%;
+  height: 50rpx;
+  font-size:26rpx;
+  color: darkslategrey;
+  display: flex;
+  align-items:center;
+}
+.my_nav_right
+{
+  width: 70%;
+  height: 50rpx;
+  font-family: "微软雅黑";
+  align-items:center;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav_sub_notify
+{
+  width: 100%;
+  border-left-color: darkred;
+  border-block-end-color: darkgoldenrod;
+  font-size:30rpx;
+  color: red;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  
+}
+.nav_sub_normal
+{
+  width: 100%;
+  font-size:22rpx;
+  color: darkslategray;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+.nav_sub_left_line
+{
+  border-right: solid 1rpx darkslategray;
+}
+
+.myform
+{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.view_input
+{
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+}
+input
+{
+  width: 85%;
+  height: 60rpx;
+  font-size:30rpx;
+  font-family: "微软雅黑";
+  border-bottom: solid 1rpx darkgray;
+  color: black;
+}
+.input_ph
+{
+  color: darkgrey;
+  font-family: "微软雅黑";
+  font-size:25rpx;
+}
+.userinfo-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 20%;
+}
+
+.inputTel
+{
+    font-family: "微软雅黑";
+    font-size:10pt;
+    color: darkgrey;
+    margin-top:20rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    width: 100%;
+    height: 30rpx;
+    line-height: 30rpx;
+}
+
+
+.swiper-tab{   
+    margin-top: 40rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;  
+    } 
+.swiper-tab-list{  font-size: 30rpx;  
+    display: inline-block;  
+    width: 50%;  
+    font-family: "微软雅黑";
+}  
+.on{
+  color: #2693FF;  
+  border-bottom: 1rpx solid #2693FF;
+  } 
+.off
+  {
+  color: darkgray;  
+  border-bottom: 1rpx solid darkgray;
+  }   
+  
+.swiper-box{ 
+  width: 100%;display: flex ;    text-align: center; 
+  } 
+  .swiper-box view{ 
+  height:auto; width: 100%;display: flex ;    text-align: center; 
+  } 
+
+.prodect_grid
+{
+    display: flex;
+    margin-top: 40rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+.grid
+{
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  font-family: "微软雅黑";
+  margin: 10rpx;
+  width:28%;
+  height: auto;
+  flex-wrap: wrap;
+  background:green ;
+  color:  #2693FF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid #2693FF 5rpx; 
+  border-radius: 7px;
+}
+
+
+.p_on
+{
+  background: #2693FF;
+  color: white;
+}
+.p_off
+{
+  background: white;
+  color: #2693FF;
+}
+.flow
+{
+  font-size: 12pt;
+}
+.price
+{
+  margin-top: 10rpx;
+  font-size: 10pt;
+}
+
+.grid-fix
+{
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  border: solid white 5rpx; 
+  margin: 10rpx;
+  width:28%;
+  background:white ;
+  color: white;
+  display: flex;
+}
+
+.body-view
+{
+margin: 20rpx;
+font-family: "微软雅黑";
+font-size: 12px;
+}
+switch
+{
+  margin: 5rpx;
+}
+.s_on
+{
+font-size: 12px;
+color: #E64340;
+font-weight: bolder;
+}
+.s_off
+{
+font-size: 12px;
+color: darkgray;
+font-weight: normal;
+}
+
+.btn_pay {
+margin: 20rpx;
+font-family: "微软雅黑";
+font-size: 20px;
+font-style:  initial;
+font-weight: bolder;
+}
+
+.bot-tip
+{
+  font-family: "微软雅黑";
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top: 40rpx;
+  padding-bottom: 5px;
+  font-size: 10px; 
+  border-bottom: dotted darkgray 1rpx;
+}
+
+
+.bot-nav
+{
+  margin-top: 10rpx;
+  color: darkgray;
+  font-family: "微软雅黑";
+  font-weight: bolder;
+  font-size: 12px; 
+  display: flex;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+.nav_sub
+{
+  padding: 10rpx;
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+.nav_sub_image
+{
+display: flex;
+border-radius: 20%;
+width: 40rpx;
+height: 40rpx;
+align-self: center;
+margin-top: 10rpx;
+margin-bottom: 10rpx;
+}
+.nav_sub_text
+{
+display: flex;
+justify-content: center;
+}

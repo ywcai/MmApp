@@ -1,0 +1,84 @@
+<!--index.wxml-->
+<view class="container">
+<image src="http://www.atool.org/temp/20170717074009545.png" class="head_img"></image>
+<view class="my_nav">
+<view class="my_nav_left">充流量</view>
+<view class="my_nav_right">
+<view class="nav_sub_notify nav_sub_left_line" 
+data-title="公告">公告</view>
+<view class="nav_sub_normal nav_sub_left_line" bindtap="lookRecord"
+data-title="充值记录">充值记录</view>
+<view class="nav_sub_normal nav_sub_left_line" bindtap="showTip"
+data-title="充值说明">充值说明</view>
+<view class="nav_sub_normal nav_sub_left_line" bindtap="showTip"
+data-title="联系客户">联系客户</view>
+</view>
+</view>
+
+<form name="pay" bindsubmit="prePay"
+class="myform" >
+<view class="view_input">
+<input  type="number" placeholder="请输入要充值的电话号码" bindblur="lookCopy"
+placeholder-class="input_ph" confirm-type="done"  cursor-spacing="10rpx" name="mobile"
+maxlength="11"/>
+<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image> 
+</view>
+
+<text class="inputTel">{{telNum}}</text>
+
+<view class="swiper-tab">  
+    <view class="swiper-tab-list {{currentPayMode==0 ? 'on' : 'off'}}" data-current="0" 
+    bindtap="swichNav">快充</view>  
+    <view class="swiper-tab-list {{currentPayMode==1 ? 'on' : 'off'}}" data-current="1" 
+    bindtap="swichNav">慢充</view> 
+</view>
+
+<view class="prodect_grid"  >
+<block wx:for="{{productList}}" wx:for-index="pid" wx:for-item="pName" wx:key="index">
+<view class="grid {{currentProduct==pid ? 'p_on' : 'p_off'}}" data-current="{{pid}}" bindtap="selectProduct" >
+<text class="flow" data-current="{{pid}}" catchtap="selectProduct">{{pName.flow}}M</text>
+<text class="price" data-current="{{pid}}" catchtap="selectProduct">{{pName.price}}元</text>
+</view>
+</block>
+<block wx:if="{{productList.length%3==2}}">
+<view class="grid-fix"></view>
+</block>
+</view>
+
+
+
+<view class="body-view">
+<text class="switch-tip">请选择套餐类型：     </text>
+<text class="{{isLocalProduct== 1 ? 's_on':'s_off' }}" >本地套餐</text>
+<switch checked="{{isLocalProduct==1}}" bindchange="switch1Change" color="#E64340" name="owner"/>
+<text class="{{isLocalProduct== 0 ? 's_on':'s_off' }}" >全国套餐</text>
+</view>
+
+<button  form-type="submit" type="warn" class="btn_pay" size="default" >订购</button>
+</form>
+
+<view class="bot-tip">
+其他充值服务
+</view>
+
+<view class="bot-nav">
+
+<view class="nav_sub">
+<image src="{{userInfo.avatarUrl}}" class="nav_sub_image" background-size="cover"></image>
+<text class="nav_sub_text">爱奇艺</text>
+</view>
+<view class="nav_sub">
+<image src="{{userInfo.avatarUrl}}" class="nav_sub_image" background-size="cover"></image>
+<text class="nav_sub_text">水电煤</text>
+</view>
+<view class="nav_sub">
+<image src="{{userInfo.avatarUrl}}" class="nav_sub_image" background-size="cover"></image>
+<text class="nav_sub_text">天府通</text>
+</view>
+<view class="nav_sub">
+<image src="{{userInfo.avatarUrl}}" class="nav_sub_image" background-size="cover"></image>
+<text class="nav_sub_text">其他</text>
+</view>
+</view>
+
+</view>
