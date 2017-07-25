@@ -36,7 +36,7 @@ Page({
   prePay: function (e) {
     var that = this;
     wx.showLoading({
-      title: '正在生成订单',
+      title: '正在请求生成订单',
     }),
       wx.login({
         success: function (res) {
@@ -56,11 +56,14 @@ Page({
                 fastPay: that.data.currentPayMode,
               },
               success: function (res2) {
-                console.log(res2.data)
+                console.log(res2)
                 wx.hideLoading()
                 var timeStamp = util.getTimeStamp()
                 var nonceStr = util.getNonceStr()
-                var prePayId=res2.data.prePayId
+                var returnCode = res2.data.return_code
+                var prePayId = res2.data.prepay_id
+                if(returnCode=="SUCCESS")
+                {
                 wx.requestPayment({
                   'timeStamp': timeStamp,
                   'nonceStr': nonceStr,
@@ -68,25 +71,33 @@ Page({
                   'signType': 'MD5',
                   'paySign': util.sign(timeStamp, nonceStr, prePayId),
                   'success': function (res3) {
-                    console.log("成功:" + res3.errMsg)
-                    //支付完成
+                    console.log("支付成功");
+                    wx.showToast({
+                      title: "支付成功",
+                      duration: 3000,
+                    })
                   },
                   'fail': function (res3) {
+                    console.log("支付失败:"+res3.errMsg)
                     wx.showToast({
-                      title: res3.errMsg,
-                      icon: '',
-                      image: '',
-                      duration: 2000,
+                      title: "支付失败",
+                      duration: 3000,
                     })
                   },
                 })
+                }
+                else
+                {
+                  wx.showToast({
+                    title: "服务端校验签名失败",
+                    duration: 2000,
+                  })
+                }
               },
               fail: function () {
                 wx.hideLoading()
                 wx.showToast({
-                  title: '请求服务端失败',
-                  icon: '',
-                  image: '',
+                  title: "服务端异常",
                   duration: 2000,
                 })
               }
@@ -96,7 +107,7 @@ Page({
         fail: function (res) {
           wx.hideLoading()
           wx.showToast({
-            title: '身份校验失败',
+            title: '身份验证失败',
             icon: '',
             image: '',
             duration: 2000,
@@ -166,20 +177,18 @@ Page({
               jsCode: res.code,
             },
             success: function (res2) {
-
               wx.hideLoading()
               //等待显示数据
+              console.log(res2.data);
               wx.showToast({
-                title: "订单号:" + res2.data.orderid,
-                icon: '',
-                image: '',
+                title: "查询订单成功",
                 duration: 2000,
               })
             },
             fail: function () {
               wx.hideLoading()
               wx.showToast({
-                title: '请求查询失败',
+                title: '服务端异常',
                 icon: '',
                 image: '',
                 duration: 2000,
