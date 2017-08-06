@@ -1,123 +1,113 @@
 <!--index.wxml-->
 <view class="show_record {{isShowRecord==1 ? 'record_on' : 'record_off'}}">
-<view class="show_reocrd_title ">
-<text class="show_reocrd_title_text">您的订单情况</text>
-<icon type="cancel" size="28" class="show_record_close" bindtap="closeRecord" color="red"/>
-</view>
-<view class="show_reocrd_content">
-<block wx:for="{{orderlist}}" wx:for-index="index" wx:for-item="orders" wx:key="myorder">
-<view class="show_reocrd_content_text {{orders.orderstatus==2 ? 'show_record_success' : orders.orderstatus==3? 'show_record_fail' : ''  }}" >
-<view class="show_record_ordernum">
-{{orders.ordernum}}
-</view>
-<view class="show_record_status">
-<block wx:if="{{orders.orderstatus==0}}">
-等待支付
-</block>
-<block wx:if="{{orders.orderstatus==1}}">
-正在充值
-</block>
-<block wx:if="{{orders.orderstatus==2}}">
-充值成功
-</block>
-<block wx:if="{{orders.orderstatus==3}}">
-充值失败
-</block>
-</view>
-<view class="show_record_fee">
-{{orders.totalfee/100}}元
-</view>
-</view>
-</block>
-</view>
+  <view class="show_reocrd_title ">
+    <text class="show_reocrd_title_text">您的订单情况</text>
+    <icon type="cancel" size="28" class="show_record_close" bindtap="closeRecord" color="red" />
+  </view>
+  <view class="show_reocrd_content">
+    <block wx:for="{{orderlist}}" wx:for-index="index" wx:for-item="orders" wx:key="myorder">
+      <view class="show_reocrd_content_text {{orders.orderstatus==2 ? 'show_record_success' : orders.orderstatus==3? 'show_record_fail' : ''  }}">
+        <view class="show_record_ordernum">
+          {{orders.ordernum}}
+        </view>
+        <view class="show_record_status">
+          <block wx:if="{{orders.orderstatus==0}}">
+            等待支付
+          </block>
+          <block wx:if="{{orders.orderstatus==1}}">
+            正在充值
+          </block>
+          <block wx:if="{{orders.orderstatus==2}}">
+            充值成功
+          </block>
+          <block wx:if="{{orders.orderstatus==3}}">
+            充值失败
+          </block>
+        </view>
+        <view class="show_record_fee">
+          {{orders.totalfee/100}}元
+        </view>
+      </view>
+    </block>
+  </view>
 </view>
 <view class="container">
-<image src="../../image/head.png" class="head_img"></image>
-<view class="my_nav">
-<view class="my_nav_left">充流量</view>
-<view class="my_nav_right">
-<view class="nav_sub_notify nav_sub_left_line" 
-data-title="公告">公告</view>
-<view class="nav_sub_normal nav_sub_left_line" bindtap="lookRecord"
-data-title="充值记录">充值记录</view>
-<view class="nav_sub_normal nav_sub_left_line" bindtap="showTip"
-data-title="充值说明">充值说明</view>
-<view class="nav_sub_normal nav_sub_left_line" bindtap="showContact"
-data-title="联系客户">联系客户</view>
-</view>
-</view>
-<form name="pay" bindsubmit="postPay"
-class="myform" >
-<view class="view_input">
-<input  type="number" placeholder="输入手机号" bindblur="lookCopy" maxlength="11"
-placeholder-class="input_ph" confirm-type="done"  cursor-spacing="10rpx" name="mobile" />
-<image class="userinfo-avatar" src="../../image/tel.png" background-size="cover"></image> 
-</view>
+  <image src="../../image/head.png" class="head_img"></image>
+  <view class="my_nav">
+    <view class="my_nav_left">充流量</view>
+    <view class="my_nav_right">
+      <view class="nav_sub_notify nav_sub_left_line" data-title="公告">公告</view>
+      <view class="nav_sub_normal nav_sub_left_line" bindtap="lookRecord" data-title="充值记录">充值记录</view>
+      <view class="nav_sub_normal nav_sub_left_line" bindtap="showTip" data-title="充值说明">充值说明</view>
+      <view class="nav_sub_normal" bindtap="showContact" data-title="联系客户">联系客户</view>
+    </view>
+  </view>
+  <form name="pay" bindsubmit="postPay" class="myform">
+    <view class="view_input">
+      <input type="number" placeholder="输入手机号" bindblur="lookCopy" maxlength="11" placeholder-class="input_ph" confirm-type="done" cursor-spacing="10rpx" name="mobile" />
+      <image class="userinfo-avatar" src="../../image/tel.png" background-size="cover"></image>
+    </view>
 
-<text class="inputTel">{{inputTip}}</text>
+    <text class="inputTel">{{inputTip}}</text>
 
 
 
-<view class="swiper-tab">  
-    <view class="swiper-tab-list {{isLocalProduct==1 ? 'on' : 'off'}}" data-current="1" 
-    bindtap="swichNav">本地套餐</view>  
-    <view class="swiper-tab-list {{isLocalProduct==0 ? 'on' : 'off'}}" data-current="0" 
-    bindtap="swichNav">全国套餐</view> 
-</view>
+    <view class="swiper-tab">
+      <view class="swiper-tab-list {{isLocalProduct==1 ? 'on' : 'off'}}" data-current="1" bindtap="swichNav">本地套餐</view>
+      <view class="swiper-tab-list {{isLocalProduct==0 ? 'on' : 'off'}}" data-current="0" bindtap="swichNav">全国套餐</view>
+    </view>
 
-<view class="prodect_grid"  >
-<block wx:for="{{productList}}" wx:for-index="pid" wx:for-item="pName" wx:key="myproduct">
-<view class="grid {{currentProduct==pid ? 'p_on' : 'p_off'}}" data-current="{{pid}}" bindtap="selectProduct" >
-<view class="flow" data-current="{{pid}}">
- <block wx:if="{{pName.flowsize>=1000}}">
-{{pName.flowsize/1000}}G
-</block>
-<block wx:if="{{pName.flowsize<1000}}">
-{{pName.flowsize}}M
-</block>
-</view>
-<view class="price" data-current="{{pid}}">{{pName.price/100}}元</view>
-</view>
-</block>
-<block wx:if="{{productList.length%3==2}}">
-<view class="grid-fix"></view>
-</block>
-</view>
+    <view class="prodect_grid">
+      <block wx:for="{{productList}}" wx:for-index="pid" wx:for-item="pName" wx:key="myproduct">
+        <view class="grid {{currentProduct==pid ? 'p_on' : 'p_off'}}" data-current="{{pid}}" bindtap="selectProduct">
+          <view class="flow" data-current="{{pid}}">
+            {{pName.des}}
+          </view>
+          <view class="price" data-current="{{pid}}">
+            {{pName.price*pName.rate/10000}}元
+          </view>
+          <view class="oldprice" data-current="{{pid}}">
+            原价{{pName.price/100}}元
+          </view>
 
+        </view>
+      </block>
+      <block wx:if="{{productList.length%3==2}}">
+        <view class="grid-fix"></view>
+      </block>
+    </view>
 
+    <view class="body-view">
+      <text class="switch-tip">请选择充值方式：     </text>
+      <text class="{{currentPayMode== 1 ? 's_on':'s_off' }}">快充</text>
+      <switch checked="{{currentPayMode==1}}" bindchange="switch1Change" color="#E64340" name="owner" />
+      <text class="{{currentPayMode== 0 ? 's_on':'s_off' }}">慢充</text>
+    </view>
+    <button form-type="submit" type="warn" class="btn_pay" size="default">订购</button>
+  </form>
 
-<view class="body-view">
-<text class="switch-tip">请选择充值方式：     </text>
-<text class="{{currentPayMode== 1 ? 's_on':'s_off' }}" >快充</text>
-<switch checked="{{currentPayMode==1}}" bindchange="switch1Change" color="#E64340" name="owner"/>
-<text class="{{currentPayMode== 0 ? 's_on':'s_off' }}" >慢充</text>
-</view>
+  <view class="bot-tip">
+    其他充值服务
+  </view>
 
-<button  form-type="submit" type="warn" class="btn_pay" size="default" >订购</button>
-</form>
+  <view class="bot-nav">
 
-<view class="bot-tip">
-其他充值服务
-</view>
-
-<view class="bot-nav">
-
-<view class="nav_sub" bindtap="showTip">
-<image src="../../image/aiqiyi.png" class="nav_sub_image" background-size="cover"></image>
-<text class="nav_sub_text">爱奇艺</text>
-</view>
-<view class="nav_sub" bindtap="showTip">
-<image src="../../image/sdm.png" class="nav_sub_image" background-size="cover"></image>
-<text class="nav_sub_text">水电煤</text>
-</view>
-<view class="nav_sub" bindtap="showTip">
-<image src="../../image/tft.png" class="nav_sub_image" background-size="cover"></image>
-<text class="nav_sub_text">天府通</text>
-</view>
-<view class="nav_sub" bindtap="showTip">
-<image src="../../image/more.png" class="nav_sub_image" background-size="cover"></image>
-<text class="nav_sub_text">其他</text>
-</view>
-</view>
+    <view class="nav_sub" bindtap="showTip">
+      <image src="../../image/aiqiyi.png" class="nav_sub_image" background-size="cover"></image>
+      <text class="nav_sub_text">爱奇艺</text>
+    </view>
+    <view class="nav_sub" bindtap="showTip">
+      <image src="../../image/sdm.png" class="nav_sub_image" background-size="cover"></image>
+      <text class="nav_sub_text">水电煤</text>
+    </view>
+    <view class="nav_sub" bindtap="showTip">
+      <image src="../../image/tft.png" class="nav_sub_image" background-size="cover"></image>
+      <text class="nav_sub_text">天府通</text>
+    </view>
+    <view class="nav_sub" bindtap="showTip">
+      <image src="../../image/more.png" class="nav_sub_image" background-size="cover"></image>
+      <text class="nav_sub_text">其他</text>
+    </view>
+  </view>
 
 </view>

@@ -3,7 +3,7 @@ var appId = 'wxd678efh567hg6787'
 var appKey = '小程序API接口密钥，非用户的sessionKey'
 function getProduct(cb, province, isLocal) {
   wx.request({
-    url: 'https://yngj.bkshare.cn:8080/flow/mr/product',
+    url: 'https://yngj.bkshare.cn/flow/mr/product',
     method: 'POST',
     header: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -31,7 +31,7 @@ function getProduct(cb, province, isLocal) {
 }
 function getOrders(res, getSuccess, getFail) {
   wx.request({
-    url: 'https://yngj.bkshare.cn:8080/flow/mr/order/lookup',
+    url: 'https://yngj.bkshare.cn/flow/mr/order/lookup',
     method: 'POST',
     header: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -68,7 +68,7 @@ function login(loginSuccess, loginFail) {
 function getProvince(mobile,success,fail)
 {
   wx.request({
-    url: 'https://yngj.bkshare.cn:8080/flow/mr/tel/' + mobile,
+    url: 'https://yngj.bkshare.cn/flow/mr/tel/' + mobile,
     method: 'GET',
     success: function (res) {
       if (res.data.return_code == "SUCCESS")
@@ -90,7 +90,7 @@ function getProvince(mobile,success,fail)
 function createOrder(jscode,tel,productId,fastpay, createOk, createFail) {
 
   wx.request({
-    url: "https://yngj.bkshare.cn:8080/flow/mr/order/prepay",
+    url: "https://yngj.bkshare.cn/flow/mr/order/prepay",
 
     method: 'POST',
     header: {

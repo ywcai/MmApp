@@ -48,8 +48,8 @@ Page({
     wx.showModal({
       title: '请确认您提交的订单信息',
       content: '手机号=' + that.data.telNum + "  " + "号码归属=" + that.data.province+
-      "  流量包大小=" + that.data.productList[that.data.currentProduct].flowsize+"M"+
-      "  支付=" + that.data.productList[that.data.currentProduct].price/100+"元",
+      "  流量包大小=" + that.data.productList[that.data.currentProduct].des+
+      "  支付=" + that.data.productList[that.data.currentProduct].price * that.data.productList[that.data.currentProduct].rate/10000+"元",
       success: function (res) {
         if (res.confirm) {
           that.prePay(that.event)
@@ -256,7 +256,7 @@ Page({
     that.setData(
       {
         isShowRecord: 1,
-        orderlist: [{ ordernum: '正在加载您的订单', status: '', timestamp: '' }]
+        orderlist: [{ ordernum: '正在加载您的订单', status: '' , timestamp: '' }]
       }
     );
     ls.getOrders(res, that.getOrderSuccess, that.getOrderFail);
