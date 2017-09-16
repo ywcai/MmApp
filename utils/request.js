@@ -1,7 +1,7 @@
-var md5 = require('md5.js')
-var appId = 'wxd678efh567hg6787'
-var appKey = '小程序API接口密钥，非用户的sessionKey'
-function getProduct(cb, province, isLocal) {
+var util = require('util.js')
+
+var appId = 'wx6bd318aa259a7eea'
+function getProduct(cb,cb2, province, isLocal) {
   wx.request({
     url: 'https://yngj.bkshare.cn/flow/mr/product',
     method: 'POST',
@@ -21,10 +21,12 @@ function getProduct(cb, province, isLocal) {
       console.log("加载产品成功");
       }
       else{
+        cb2();
         console.log("服务端返回数据错误!");  
       }
     },
     fail: function (res) {
+      cb2();
       console.log("服务端返回数据错误!");  
     }
   })
@@ -119,14 +121,41 @@ function createOrder(jscode,tel,productId,fastpay, createOk, createFail) {
     }
   })
 }
-
-
-
+function getHeadImg(func1, func2)
+{
+  var nonce_Str = util.getNonceStr();
+  console.log(nonce_Str);
+  wx.request({
+    url: 'https://yngj.bkshare.cn/manage/app/config',
+    method: 'POST',
+    header: {
+      'content-type': 'application/json'
+    },
+    data:
+    {
+      appid: appId,
+      nonce_str: nonce_Str,
+      sign: util.setMd5(appId + nonce_Str)
+    },
+    success: function (res) {
+      if (res.data.return_code == "SUCCESS") {
+        func1(res)
+      }
+      else {
+        func2();
+      }
+    },
+    fail: function () {
+      func2();
+    }
+  })
+}
 
 module.exports = {
   getProduct: getProduct,
   getOrders: getOrders,
   login: login,
   createOrder: createOrder,
-  getProvince: getProvince
+  getProvince: getProvince,
+  getHeadImg: getHeadImg,
 }

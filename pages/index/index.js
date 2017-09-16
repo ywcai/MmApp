@@ -4,52 +4,59 @@ var app = getApp()
 Page({
   data: {
     telNum: "",
-    inputTip: "输入手机号码后，可订购流量产品列表将自动刷新",
+    inputTip: "输入手机号码后，自动刷新流量订购产品列表",
     province: "未知号码",
     userInfo: {},
     currentPayMode: 1,
     currentProduct: -1,
     isLocalProduct: 1,
-    isLoading:0,
+    isLoading: 0,
     productList: [],
-    orderlist: []
+    orderlist: [],
+    imgUrls: [
+      'https://yngj.bkshare.cn/res/images/index_head_1.jpg',
+      'https://yngj.bkshare.cn/res/images/index_head_2.jpg',
+      'https://yngj.bkshare.cn/res/images/index_head_3.jpg'
+    ]
   },
   showTip: function (event) {
     wx.showToast({
+      image: '../../image/more.png',
       title: '正在开发中，尽请期待!',
       duration: 2000,
       mask: true,
     })
   },
+  showFail: function (event) {
+    wx.showToast({
+      image: '../../image/error.png',
+      title: event,
+      duration: 2000,
+      mask: true,
+    })
+  },
 
-  showContact:function(event)
-  {
+  showContact: function (event) {
     wx.showModal({
       title: '联系客户',
       content: '客户联系电话:XXXXXXX',
-      showCancel:false,
-      confirmText:"关闭"
-    }) 
+      showCancel: false,
+      confirmText: "关闭"
+    })
   },
-  postPay:function(e)
-  {
-    var that=this;
-    var event=e;
+  postPay: function (e) {
+    var that = this;
+    var event = e;
 
-    if (that.data.currentProduct==-1)
-    {
-      wx.showToast({
-        title: '未选择产品',
-      })
-      return 
+    if (that.data.currentProduct == -1) {
+      that.showFail("未选择产品");
+      return
     }
-
-
     wx.showModal({
       title: '请确认您提交的订单信息',
-      content: '手机号=' + that.data.telNum + "  " + "号码归属=" + that.data.province+
-      "  流量包大小=" + that.data.productList[that.data.currentProduct].des+
-      "  支付=" + that.data.productList[that.data.currentProduct].price * that.data.productList[that.data.currentProduct].rate/10000+"元",
+      content: '手机号=' + that.data.telNum + "  " + "号码归属=" + that.data.province +
+      "  流量包大小=" + that.data.productList[that.data.currentProduct].des +
+      "  支付=" + that.data.productList[that.data.currentProduct].price * that.data.productList[that.data.currentProduct].rate / 10000 + "元",
       success: function (res) {
         if (res.confirm) {
           that.prePay(that.event)
@@ -60,13 +67,13 @@ Page({
 
   prePay: function (e) {
     var that = this;
-    if (that.data.isLoading==1)
-    {
-      console.log("请求中，重复点击");
-      return ;
+    if (that.data.isLoading == 1) {
+      console.log("请求中，请勿重复点击");
+      return;
     }
     wx.showLoading({
-      title: '请稍后',
+      title: '处理中',
+      mask: true,
     })
     if (that.data.currentProduct >= 0 && that.data.province != "未知号码" && that.data.telNum != "" && that.data.telNum.length == 11) {
       that.setData
@@ -76,11 +83,12 @@ Page({
       ls.login(that.loginSuccess2PrePay, that.loginFail);
     }
     else {
-      wx.showToast({
-        title: '订购信息错误!',
-        duration: 2000,
-        mask: true,
-      })
+      // wx.showToast({
+      //   title: '订购信息错误!',
+      //   duration: 2000,
+      //   mask: true,
+      // })
+      that.showFail("订购信息错误");
     }
   },
   loginSuccess2PrePay: function (res) {
@@ -95,20 +103,21 @@ Page({
   },
   createOrderOk: function (prePayId) {
     //发起支付
-    var that=this
+    var that = this
     var timeStamp = util.getTimeStamp()
     var nonceStr = util.getNonceStr()
     wx.requestPayment({
       'timeStamp': timeStamp,
       'nonceStr': nonceStr,
-      'package': prePayId,
+      'package': "prepay_id=" + prePayId,
       'signType': 'MD5',
-      'paySign': util.sign(timeStamp, nonceStr, prePayId),
+      'paySign': util.sign(timeStamp, nonceStr, "prepay_id=" + prePayId),
       'success': function (res) {
-        console.log("支付成功" + res);
+        console.log("支付成功" + res.errMsg);
         wx.showToast({
           title: "支付成功",
           duration: 3000,
+          mask: true,
         })
         that.setData(
           {
@@ -118,10 +127,12 @@ Page({
       },
       'fail': function (res) {
         console.log("支付失败:" + res.errMsg)
-        wx.showToast({
-          title: "支付失败",
-          duration: 3000,
-        })
+        // wx.showToast({
+        //   title: res.errMsg,
+        //   duration: 3000,
+        //   mask: true,
+        // })
+        that.showFail("支付失败:" + res.errMsg);
         that.setData(
           {
             isLoading: 0
@@ -131,14 +142,16 @@ Page({
     })
   },
   createOrderFail: function (errCode) {
-    var that=this
-    wx.showToast({
-      title: "生成订单失败:" + errCode,
-      duration: 3000,
-    })
+    var that = this
+    // wx.showToast({
+    //   title: "生成订单失败:" + errCode,
+    //   duration: 3000,
+    //   mask: true,
+    // })
+    that.showFail("生成订单失败" + errCode);
     that.setData(
       {
-        isLoading:0
+        isLoading: 0
       }
     )
   },
@@ -149,17 +162,25 @@ Page({
       return false;
     } else {
       that.setData({
-        isLocalProduct: e.target.dataset.current
+        isLocalProduct: e.target.dataset.current,
+        currentProduct: -1
       })
     }
-    if (that.data.province != "未知号码" && that.data.telNum != "" && that.data.telNum.length == 11) {
+    if (that.data.province != "未知号码" && that.data.telNum != "" && that.data.telNum.length == 11)    {
       ls.getProduct(
         that.setProduct,
+        that.getProductFail,
         that.data.province,
         that.data.isLocalProduct);
     }
   },
-
+  getProductFail:function()
+  {
+    var that = this;
+    console.log("获取产品信息失");
+    that.showFail("获取产品信息失败!")
+    that.setProduct([]);
+  },
   selectProduct: function (e) {
     var that = this;
     if (this.data.currentProduct === e.target.dataset.current) {
@@ -191,16 +212,24 @@ Page({
       })
     }
   },
-
-
   lookCopy: function (e) {
     var that = this
     if (e.detail.value != that.data.telNum) {
       that.setData({
-        telNum: e.detail.value,
+        telNum: e.detail.value
+      });
+
+      if (that.data.telNum === "") {
+        that.setData({
+          inputTip: "输入手机号码后，自动刷新流量订购产品列表"
+        })
       }
-      )
-      ls.getProvince(that.data.telNum, that.getMobileSuccess, that.getMobileFail);
+      else if (that.data.telNum.length != 11) {
+        that.getMobileFail();
+      }
+      else {
+        ls.getProvince(that.data.telNum, that.getMobileSuccess, that.getMobileFail);
+      }
     }
   },
 
@@ -215,6 +244,7 @@ Page({
     )
     ls.getProduct(
       that.setProduct,
+      that.getProductFail,
       that.data.province,
       that.data.isLocalProduct);
   },
@@ -256,17 +286,19 @@ Page({
     that.setData(
       {
         isShowRecord: 1,
-        orderlist: [{ ordernum: '正在加载您的订单', status: '' , timestamp: '' }]
+        orderlist: [{ ordernum: '正在加载您的订单', status: '', totalfee: 0 }]
       }
     );
     ls.getOrders(res, that.getOrderSuccess, that.getOrderFail);
   },
   loginFail: function () {
-    var that=this;
-    wx.showToast({
-      title: '登录失败',
-      duration: 2000
-    })
+    var that = this;
+    // wx.showToast({
+    //   title: '登录失败',
+    //   duration: 2000,
+    //   mask: true,
+    // })
+    that.showFail("登录失败");
     that.setData(
       {
         isLoading: 0
@@ -282,16 +314,42 @@ Page({
       }
     )
   },
+
+  getHeadImgSuccess: function (res) {
+    //设置网络图片
+    var that = this;
+    that.setData({
+      imgUrls: [
+        'https://yngj.bkshare.cn/res/images/index_head_1.jpg',
+        'https://yngj.bkshare.cn/res/images/index_head_2.jpg',
+        'https://yngj.bkshare.cn/res/images/index_head_3.jpg'
+      ]
+    })
+  },
+  getHeadImgFail: function () {
+    //设置网络图片
+    var that = this;
+    that.setData({
+      imgUrls: [
+        '../../image/head.png',
+      ]
+    })
+  },
+
   onLoad: function () {
     var that = this
     app.getUserInfo(function (userInfo) {
       that.setData({
         userInfo: userInfo
       })
-    })
-    // ls.getProduct(
-    //   that.setProduct,
-    //   that.data.province,
-    //   that.data.isLocalProduct);
+    });
+    // ls.getHeadImg(
+    //   that.getHeadImgSuccess, that.getHeadImgSuccess
+    // );
   }
+  ,
+  onPullDownRefresh: function () {
+    // Do something when pull down.
+    wx.stopPullDownRefresh();
+  },
 })

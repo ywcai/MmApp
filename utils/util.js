@@ -1,6 +1,8 @@
 var md5 = require('md5.js')
-var appId='wxd678efh567hg6787'
-var appKey='小程序API接口密钥，非用户的sessionKey'
+var appId = 'wx6bd318aa259a7eea'
+// var appKey='这里用的是商户密钥，非用户的sessionKey'
+
+
 function formatTime(date) {
   var year = date.getFullYear()
   var month = date.getMonth() + 1
@@ -24,20 +26,27 @@ function getNonceStr() {
 }
 function sign(timeStamp, nonceStr, prepay_id,key) 
 {
-  var src="appId="+ appId
+  var src="appId="+appId
   src += "&nonceStr="+nonceStr
-  src += "&package=prepay_id=" + prepay_id 
+  src += "&package="+prepay_id
   src += "&signType=MD5"
-  src += "&timeStamp=" + timeStamp
-  src += "&key=" + appKey
+  src += "&timeStamp="+timeStamp
+  src += "&key="+appKey
   console.log("src:" + src)
   src = md5.MD5(src).toUpperCase()
   console.log("md5:" + src)
   return src;
 }
+function setMd5(src_str)
+{
+  var str=src_str+"ywcai";
+  str = md5.MD5(str);
+  return str
+}
 module.exports = {
   formatTime: formatTime,
   getTimeStamp: getTimeStamp,
   getNonceStr: getNonceStr,
-  sign: sign
+  sign: sign,
+  setMd5: setMd5
 }

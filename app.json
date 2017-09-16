@@ -1,10 +1,39 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index"
   ],
-  "window":{
-    "navigationBarBackgroundColor": "#aaa",
-    "navigationBarTitleText": "三网流量",
-    "navigationBarTextStyle":"light"
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "三网流量充值",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":"true",
+    "backgroundTextStyle":"drak",
+    "backgroundColor":"#cccccc"
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "流量充值",
+        "iconPath": "image/more.png"
+      },
+      {
+        "pagePath": "pages/aqy/aqy",
+        "text": "爱奇艺",
+        "iconPath": "image/aqy.png"
+      },
+      {
+        "pagePath": "pages/sdm/sdm",
+        "text": "水电煤",
+        "iconPath": "image/sdm.png"
+      },
+      {
+        "pagePath": "pages/tft/tft",
+        "text": "天府通",
+        "iconPath": "image/tft.png"
+      }
+    ],
+    "position": "bottom"
   }
 }

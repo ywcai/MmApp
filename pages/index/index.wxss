@@ -7,22 +7,26 @@
 
 .head_img {
   width: 100%;
-  height: 200rpx;
 }
-
+.top_line
+{
+    border-bottom: dashed 3rpx darkgrey;
+    height: 10rpx;
+    align-content: center;
+}
 .my_nav {
   margin-top: 10rpx;
   font-family: "微软雅黑";
   margin-left: 20rpx;
   margin-right: 20rpx;
-  height: 50rpx;
+  height: 80rpx;
   background: white;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-top: 10rpx;
   padding-bottom: 10rpx;
-  border-top: solid 1rpx darkgrey;
+  /* border-top: solid 1rpx darkgrey; */
   border-bottom: solid 1rpx darkgrey;
 }
 
@@ -78,13 +82,14 @@
   margin-top: 40rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
+  margin-bottom: 20rpx;
   height: 60rpx;
   display: flex;
   flex-direction: row;
 }
 
 input {
-  width: 85%;
+  width: 60%;
   height: 60rpx;
   font-size: 30rpx;
   font-family: "微软雅黑";
@@ -108,7 +113,6 @@ input {
   font-family: "微软雅黑";
   font-size: 10pt;
   color: darkgrey;
-  margin-top: 20rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
   width: 100%;
@@ -249,61 +253,13 @@ switch {
   font-style: initial;
   font-weight: bolder;
 }
-
-.bot-tip {
-  font-family: "微软雅黑";
-  margin-left: 20rpx;
-  margin-right: 20rpx;
-  margin-top: 40rpx;
-  padding-bottom: 5px;
-  font-size: 10px;
-  border-bottom: dotted darkgray 1rpx;
-}
-
-.bot-nav {
-  margin-top: 10rpx;
-  color: darkgray;
-  font-family: "微软雅黑";
-  font-weight: bolder;
-  font-size: 12px;
-  display: flex;
-  margin-left: 20rpx;
-  margin-right: 20rpx;
-  margin-bottom: 20rpx;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.nav_sub {
-  padding: 10rpx;
-  width: 22%;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-}
-
-.nav_sub_image {
-  display: flex;
-  border-radius: 20%;
-  width: 40rpx;
-  height: 40rpx;
-  align-self: center;
-  margin-top: 10rpx;
-  margin-bottom: 10rpx;
-}
-
-.nav_sub_text {
-  display: flex;
-  justify-content: center;
-}
-
 .show_record {
   display: flex;
   flex-direction: column;
   z-index: 10;
   position: absolute;
-  left: 5%;
-  width: 90%;
+  left: 1.5%;
+  width: 96%;
   height: 60%;
   top: 10%;
   background: white;
@@ -339,8 +295,8 @@ switch {
 
 .show_reocrd_content {
   padding-bottom: 10rpx;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
+  padding-left: 20rpx;
+  padding-right: 10rpx;
   height: 100%;
   font-size: 12px;
   overflow-y: scroll;
@@ -367,15 +323,15 @@ switch {
 }
 
 .show_record_ordernum {
-  width: 70%;
+  width: 60%;
 }
 
 .show_record_status {
-  width: 16%;
+  width: 20%;
 }
 
 .show_record_fee {
-  width: 14%;
+  width: 20%;
 }
 
 .record_on {
